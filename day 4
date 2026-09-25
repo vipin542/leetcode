@@ -1,0 +1,23 @@
+import java.util.ArrayDeque;
+import java.util.Queue;
+
+class RecentCounter {
+    private final Queue<Integer> queue;
+
+    public RecentCounter() {
+        this.queue = new ArrayDeque<>();
+    }
+    
+    public int ping(int t) {
+        // 1. Add current timestamp
+        queue.offer(t);
+        
+        // 2. Remove timestamps outside the [t - 3000, t] window
+        while (!queue.isEmpty() && queue.peek() < t - 3000) {
+            queue.poll();
+        }
+        
+        // 3. Elements in queue represent all valid calls in the range
+        return queue.size();
+    }
+}
